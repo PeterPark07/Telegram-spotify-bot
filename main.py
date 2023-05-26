@@ -23,6 +23,12 @@ def telegram():
 def send_welcome(message):
     bot.reply_to(message, 'Welcome to the SpotDL Song Downloader Bot!')
 
+# Handler for the '/start' command
+@bot.message_handler(commands=['delete'])
+def deleteit(message):
+    bot.remove_webhook()
+    bot.reply_to(message  , "Bot is Free now")
+    
 # Handler for receiving messages
 @bot.message_handler(func=lambda message: True)
 def download_song(message):
