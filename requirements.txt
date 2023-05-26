@@ -1,3 +1,5 @@
-flask
-telebot
 spotdl
+gunicorn
+requests
+Flask
+pyTelegramBotAPI
