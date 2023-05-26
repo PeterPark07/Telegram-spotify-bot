@@ -4,7 +4,9 @@ import telebot
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT'), threaded=False)
+bot.set_webhook(url=os.getenv('url'))
 state = False
+
 
 @app.route('/', methods=['POST'])
 def telegram():
