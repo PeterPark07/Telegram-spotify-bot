@@ -7,6 +7,8 @@ bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT'), threaded=False)
 bot.set_webhook(url=os.getenv('url'))
 state = False
 
+last_message_id = None
+
 @app.route('/', methods=['POST'])
 def telegram():
     # Process incoming updates
@@ -16,21 +18,29 @@ def telegram():
         bot.process_new_updates([update])
         return 'OK', 200
 
-      
 # Handler for the '/start' command
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.reply_to(message, 'Welcome to the SpotDL Song Downloader Bot!')
 
-# Handler for the '/start' command
+# Handler for the '/delete' command
 @bot.message_handler(commands=['delete'])
 def deleteit(message):
     bot.remove_webhook()
-    bot.reply_to(message  , "Bot is Free now")
-    
+    bot.reply_to(message, "Bot is Free now")
+
 # Handler for receiving messages
 @bot.message_handler(func=lambda message: True)
 def download_song(message):
+    global last_message_id
+
+    # Check if this is the same message as the previous one
+    if last_message_id == message.message_id:
+        return
+
+    # Store the current message ID as the most recent one
+    last_message_id = message.message_id
+
     # Extract the input from the message
     input_text = message.text.strip()
 
@@ -51,13 +61,13 @@ def download_song(message):
 
     # Run SpotDL command in the shell to download the song
     command = f'spotdl --format m4a {spotify_link}'
-    
-    wait = bot.reply_to(message, 'Downloading...') 
+
+    wait = bot.reply_to(message, 'Downloading...')
     result = os.system(command)
     bot.delete_message(message.chat.id, wait.message_id)
 
     if result != 0:
-      bot.reply_to(message , "This query yielded no results")
+        bot.reply_to(message, "This query yielded no results")
 
     # Get the list of downloaded song files
     song_files = [f for f in os.listdir('.') if os.path.isfile(f) and os.path.getsize(f) > 10000]
