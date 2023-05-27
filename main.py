@@ -7,7 +7,7 @@ bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT'), threaded=False)
 bot.set_webhook(url=os.getenv('url'))
 state = False
 
-os.system("spotdl --download-ffmpeg")
+# os.system("spotdl --download-ffmpeg")
 
 @app.route('/', methods=['POST'])
 def telegram():
@@ -52,7 +52,7 @@ def download_song(message):
         spotify_link = f'\'{input_text}\''
 
     # Run SpotDL command in the shell to download the song
-    command = f'spotdl {spotify_link}'
+    command = f'spotdl --format m4a {spotify_link}'
     
     bot.reply_to(message , "Downloading...")
     result = os.system(command)
