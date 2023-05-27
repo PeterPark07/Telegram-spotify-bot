@@ -22,28 +22,25 @@ def telegram():
 def send_welcome(message):
     bot.reply_to(message, 'Welcome to the Spotify Downloader Bot!\n\nSend me a song name or a Spotify link to download.')
 
-@bot.message_handler(commands=['on']) 
- def handle_on(message): 
-     global state 
-     state = True 
-     # Handle the /on command 
-     bot.reply_to(message, "BOT ON") 
-  
-  
- @bot.message_handler(commands=['off']) 
- def handle_off(message): 
-     global state 
-     state = False 
-     # Handle the /off command 
-     bot.reply_to(message, "BOT OFF") 
- 
+@bot.message_handler(commands=['on'])
+def handle_on(message):
+    global state
+    state = True
+    # Handle the /on command
+    bot.reply_to(message, "BOT ON")
+
+@bot.message_handler(commands=['off'])
+def handle_off(message):
+    global state
+    state = False
+    # Handle the /off command
+    bot.reply_to(message, "BOT OFF")
 
 # Handler for receiving messages
 @bot.message_handler(func=lambda message: True)
 def download_song(message):
     if not state:
         return
-
 
     global last_message_id
 
