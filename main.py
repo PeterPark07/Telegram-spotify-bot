@@ -52,9 +52,10 @@ def download_song(message):
     # Run SpotDL command in the shell to download the song
     command = f'spotdl --format m4a {spotify_link}'
     
-    bot.reply_to(message , "Downloading...")
+    wait = bot.reply_to(message, 'Downloading...') 
     result = os.system(command)
-    
+    bot.delete_message(message.chat.id, wait.message_id)
+
     if result != 0:
       bot.reply_to(message , "This query yielded no results")
 
