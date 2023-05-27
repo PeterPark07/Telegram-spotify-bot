@@ -7,8 +7,6 @@ bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT'), threaded=False)
 bot.set_webhook(url=os.getenv('url'))
 state = False
 
-# os.system("spotdl --download-ffmpeg")
-
 @app.route('/', methods=['POST'])
 def telegram():
     # Process incoming updates
