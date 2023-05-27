@@ -36,7 +36,8 @@ def download_song(message):
 
     # Check if this is the same message as the previous one
     if last_message_id == message.message_id:
-        bot.reply_to(message, "done")
+        wait = bot.reply_to(message, "Completed")
+        bot.delete_message(message.chat.id, wait.message_id)
         return
 
     # Store the current message ID as the most recent one
