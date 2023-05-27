@@ -61,7 +61,7 @@ def download_song(message):
         spotify_link = f'\'{input_text}\''
 
     # Run SpotDL command in the shell to download the song
-    command = f'spotdl --format m4a {spotify_link}'
+    command = f'spotdl {spotify_link}'
 
     wait = bot.reply_to(message, 'Downloading...')
     result = os.system(command)
