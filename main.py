@@ -6,7 +6,6 @@ app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT'), threaded=False)
 bot.set_webhook(url=os.getenv('url'))
 state = False
-
 last_message_id = None
 
 @app.route('/', methods=['POST'])
@@ -21,7 +20,7 @@ def telegram():
 # Handler for the '/start' command
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, 'Welcome to the SpotDL Song Downloader Bot!')
+    bot.reply_to(message, 'Welcome to the Spotify Downloader Bot!\n\nSend me a song name or a Spotify link to download.')
 
 # Handler for the '/delete' command
 @bot.message_handler(commands=['delete'])
