@@ -22,12 +22,6 @@ def telegram():
 def send_welcome(message):
     bot.reply_to(message, 'Welcome to the Spotify Downloader Bot!\n\nSend me a song name or a Spotify link to download.')
 
-# Handler for the '/delete' command
-@bot.message_handler(commands=['delete'])
-def deleteit(message):
-    bot.remove_webhook()
-    bot.reply_to(message, "Bot is Free now")
-
 @bot.message_handler(commands=['on']) 
  def handle_on(message): 
      global state 
