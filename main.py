@@ -72,7 +72,7 @@ def download_song(message):
         spotify_link = f'\'{input_text}\''
 
     # Run SpotDL command in the shell to download the song
-    command = f'spotdl {spotify_link}'
+    command = f'spotdl --threads 6 {spotify_link}'
     
     start_time = time.time()  # Record the start time
     
