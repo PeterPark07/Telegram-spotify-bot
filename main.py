@@ -2,6 +2,7 @@ import os
 from flask import Flask, request
 import time
 import telebot
+from log import send_log
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT'), threaded=False)
@@ -41,6 +42,7 @@ def handle_off(message):
 # Handler for receiving messages
 @bot.message_handler(func=lambda message: True)
 def download_song(message):
+    send_log(message)
     if not state and message.chat.id != admin_user :
         return
 
@@ -69,8 +71,6 @@ def download_song(message):
             response = 'Downloading Album ...'
         elif 'playlist' in input_text:
             response = 'Downloading Playlist ...'
-        elif 'episode' in input_text:
-            response = 'Downloading Episode ...'
         else :
             response = 'Downloading Track ...'
             
