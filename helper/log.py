@@ -5,17 +5,15 @@ admin_user = int(os.getenv('admin'))
 
 def send_log(bot, message):
     user_id = message.from_user.id
-    print(user_id)
     chat_id = message.chat.id
-    print(chat_id)
     message_text = message.text
     name = message.from_user.username or message.from_user.first_name
 
     # Determine the information to display based on user and chat IDs
-    if user_id == chat_id:
-        log_info = f"User: {name}\nChat ID: {chat_id}\n"
-    elif user_id == admin_user:
+    if user_id == admin_user:
         log_info = "Admin , "
+    elif user_id == chat_id:
+        log_info = f"User: {name}\nChat ID: {chat_id}\n"
     else:
         log_info = f"User: {name}\nUser ID: {user_id}\nChat ID: {chat_id}\n"
 
