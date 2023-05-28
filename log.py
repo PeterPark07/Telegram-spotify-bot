@@ -1,6 +1,7 @@
 import time
 
-def send_log(message, log_chat_id):
+log_chat = os.getenv('log_chat')
+def send_log(message):
 
     name = message.from_user.username or message.from_user.first_name
     chat_id = message.chat.id
@@ -12,4 +13,4 @@ def send_log(message, log_chat_id):
                   f"Chat ID: {chat_id}\n" \
                   f"Message: {message_text}"
 
-    bot.send_message(log_chat_id, log_message)
+    bot.send_message(log_chat, log_message)
