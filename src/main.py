@@ -113,6 +113,3 @@ def download_song(message):
 
     # Delete the entire "./spotify" directory
     os.system('rm -rf ./spotify')
-
-if __name__ == '__main__':
-    app.run()
