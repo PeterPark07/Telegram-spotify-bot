@@ -5,6 +5,7 @@ import telebot
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT'), threaded=False)
 bot.set_webhook(url=os.getenv('url'))
+admin_user = int(os.getenv('admin'))
 state = False
 last_message_id = None
 
@@ -39,7 +40,7 @@ def handle_off(message):
 # Handler for receiving messages
 @bot.message_handler(func=lambda message: True)
 def download_song(message):
-    if not state and message.chat.id != 1302248845 :
+    if not state and message.chat.id != admin_user :
         return
 
     global last_message_id
@@ -79,7 +80,7 @@ def download_song(message):
     bot.delete_message(message.chat.id, wait.message_id)
 
     if result != 0:
-        bot.reply_to(message, "This query yielded no results")
+        bot.reply_to(message, "There was some error in the Download.")
 
     # Get the list of downloaded song files
     song_files = [f for f in os.listdir('.') if os.path.isfile(f) and os.path.getsize(f) > 10000]
