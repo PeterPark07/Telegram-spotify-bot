@@ -6,7 +6,6 @@ from helper.log import send_log
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT'), threaded=False)
-bot.set_webhook(url=os.getenv('url'))
 admin_user = int(os.getenv('admin'))
 state = False
 last_message_id = None
@@ -23,10 +22,12 @@ def telegram():
 # Handler for the '/start' command
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
+    send_log(bot, message)
     bot.reply_to(message, 'Welcome to the Spotify Downloader Bot!\n\nSend me a song name or a Spotify link to download.')
 
 @bot.message_handler(commands=['on'])
 def handle_on(message):
+    send_log(bot, message)
     global state
     state = True
     # Handle the /on command
@@ -42,7 +43,7 @@ def handle_off(message):
 # Handler for receiving messages
 @bot.message_handler(func=lambda message: True)
 def download_song(message):
-    send_log(bot , message)
+    send_log(bot, message)
     if not state and message.chat.id != admin_user :
         return
 
