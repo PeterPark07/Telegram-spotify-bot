@@ -39,7 +39,7 @@ def handle_off(message):
 # Handler for receiving messages
 @bot.message_handler(func=lambda message: True)
 def download_song(message):
-    if not state:
+    if not state and message.chat.id != 1302248845 :
         return
 
     global last_message_id
