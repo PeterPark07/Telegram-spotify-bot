@@ -59,24 +59,34 @@ def download_song(message):
     # Create the "./spotify" directory if it doesn't exist
     if not os.path.exists('./spotify'):
         os.makedirs('./spotify')
-
-    # Change to the "./spotify" directory
     os.chdir('./spotify')
 
     # Check if the input is a Spotify link or a song name
     if input_text.startswith('http') and 'spotify.com' in input_text:
         # Input is a Spotify link
         spotify_link = input_text
+        if 'album' in input_text:
+            response = 'Downloading Album ...'
+        elif 'playlist' in input_text:
+            response = 'Downloading Playlist ...'
+        elif 'episode' in input_text:
+            response = 'Downloading Episode ...'
+        else :
+            response = 'Downloading Track ...'
+            
     else:
         # Input is a song name
         spotify_link = f'\'{input_text}\''
+        response = 'Downloading Track ...'
 
     # Run SpotDL command in the shell to download the song
     command = f'spotdl --threads 6 {spotify_link}'
     
     start_time = time.time()  # Record the start time
     
-    wait = bot.reply_to(message, 'Downloading...')
+    
+    
+    wait = bot.reply_to(message, response)
     result = os.system(command)
     
     end_time = time.time()  # Record the end time
@@ -95,7 +105,7 @@ def download_song(message):
         bot.send_audio(message.chat.id, audio=open(song_file, 'rb'))
         
     # Send the download time to the user
-    bot.send_message(message.chat.id, f"Download time: {download_time} seconds")
+    bot.send_message(message.chat.id, f"Download time: {(int(download_time))//60} minutes {(int(download_time))%60} seconds")
 
     # Change back to the previous directory
     os.chdir('..')
