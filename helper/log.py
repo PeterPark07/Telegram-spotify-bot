@@ -1,17 +1,21 @@
-import time
 import os
 
 log_chat = os.getenv('log_chat')
-def send_log(bot , message):
 
-    name = message.from_user.username or message.from_user.first_name
+def send_log(bot, message):
+    user_id = message.from_user.id
     chat_id = message.chat.id
     message_text = message.text
+    name = message.from_user.username or message.from_user.first_name
 
-    log_message = f"Bot: @{bot.get_me().username}\n" \
-                  f"Time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}\n" \
-                  f"User: {name}\n" \
-                  f"Chat ID: {chat_id}\n" \
-                  f"Message: {message_text}"
+    # Determine the information to display based on user and chat IDs
+    if user_id == chat_id:
+        log_info = f"User: {name}\nChat ID: {chat_id}"
+    else:
+        log_info = f"User: {name}\nUser ID: {user_id}\nChat ID: {chat_id}"
 
+    # Construct the log message with relevant details
+    log_message = f"Bot: @{bot.get_me().username}\n{log_info}\nMessage: {message_text}"
+
+    # Send the log message to the designated log chat
     bot.send_message(log_chat, log_message)
