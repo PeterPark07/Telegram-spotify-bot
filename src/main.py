@@ -41,7 +41,6 @@ def download_song(message):
     global last_message_id
     if last_message_id == message.message_id:
         return
-    last_message_id = message.message_id
 
     input_text = message.text.strip()
 
@@ -55,6 +54,7 @@ def download_song(message):
     start_time = time.time()
     wait = bot.reply_to(message, response)
     result = os.system(command)
+    last_message_id = message.message_id
     end_time = time.time()
     download_time = end_time - start_time
     bot.delete_message(message.chat.id, wait.message_id)
