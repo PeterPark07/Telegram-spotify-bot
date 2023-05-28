@@ -1,4 +1,5 @@
 import time
+import os
 
 log_chat = os.getenv('log_chat')
 def send_log(message):
