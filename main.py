@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request
+import time
 import telebot
 
 app = Flask(__name__)
@@ -47,8 +48,6 @@ def download_song(message):
 
     # Check if this is the same message as the previous one
     if last_message_id == message.message_id:
-        wait = bot.reply_to(message, "Completed")
-        bot.delete_message(message.chat.id, wait.message_id)
         return
 
     # Store the current message ID as the most recent one
@@ -74,9 +73,14 @@ def download_song(message):
 
     # Run SpotDL command in the shell to download the song
     command = f'spotdl {spotify_link}'
-
+    
+    start_time = time.time()  # Record the start time
+    
     wait = bot.reply_to(message, 'Downloading...')
     result = os.system(command)
+    
+    end_time = time.time()  # Record the end time
+    download_time = end_time - start_time  # Calculate the download time
     bot.delete_message(message.chat.id, wait.message_id)
 
     if result != 0:
@@ -89,6 +93,9 @@ def download_song(message):
     for song_file in song_files:
         # Send the song file as an audio to the user
         bot.send_audio(message.chat.id, audio=open(song_file, 'rb'))
+        
+    # Send the download time to the user
+    bot.send_message(message.chat.id, f"Download time: {download_time} seconds")
 
     # Change back to the previous directory
     os.chdir('..')
