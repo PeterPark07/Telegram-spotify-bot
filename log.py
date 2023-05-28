@@ -8,7 +8,7 @@ def send_log(message):
     chat_id = message.chat.id
     message_text = message.text
 
-    log_message = f"Bot: @{bot.get_me().username}\n" \
+    log_message = f"Bot: Spotify\n" \
                   f"Time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}\n" \
                   f"User: {name}\n" \
                   f"Chat ID: {chat_id}\n" \
