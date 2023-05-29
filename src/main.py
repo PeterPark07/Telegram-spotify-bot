@@ -5,7 +5,7 @@ import telebot
 from helper.log import send_log
 
 app = Flask(__name__)
-bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT'), threaded=False)
+bot = telebot.TeleBot(os.getenv('spotify_bot'), threaded=False)
 admin_user = int(os.getenv('admin'))
 state = False
 last_message_id = None
