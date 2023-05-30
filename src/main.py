@@ -17,13 +17,15 @@ def telegram():
         bot.process_new_updates([telebot.types.Update.de_json(request.get_data().decode('utf-8'))])
         return 'OK', 200
     
-@bot.message_handler(commands=['start', 'on', 'off'])
+@bot.message_handler(commands=['start', 'on', 'off', 'help'])
 def handle_commands(message):
     # Handle /start, /on, and /off commands
     send_log(bot, message)
     global state
     if message.text == '/start':
         bot.reply_to(message, 'Welcome to the Spotify Downloader Bot!\n\nSend me a song name or a Spotify link to download.')
+    elif message.text == '/help' :
+        bot.reply_to(message, "This bot can download songs from Spotify. Here's how to use it:\n\n1. Send a song name: Just send the name of the song, e.g., 'Luxury'.\n2. Send a Spotify link: Send a link to a specific song, album, or playlist on Spotify.\nPlease note that downloading albums and playlists may take longer.")
     elif message.text == '/on':
         state = True
         bot.reply_to(message, "BOT ON")
