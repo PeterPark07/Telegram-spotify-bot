@@ -38,7 +38,7 @@ def handle_commands(message):
 def download_song(message):
     # Handle song download requests
     send_log(bot, message)
-        if not state and message.chat.id != admin_user and message.chat.id not in users :
+    if not state and message.chat.id != admin_user and message.chat.id not in users :
         return
 
     global last_message_id
