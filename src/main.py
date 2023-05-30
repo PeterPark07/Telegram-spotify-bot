@@ -6,7 +6,8 @@ from helper.log import send_log
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('spotify_bot'), threaded=False)
-admin_users = [int(id) for id in (os.getenv('admin').split(','))]
+admin_user = int(os.getenv('admin'))  
+users = [int(id) for id in (os.getenv('users').split(','))]
 state = False
 last_message_id = None
 
@@ -37,7 +38,7 @@ def handle_commands(message):
 def download_song(message):
     # Handle song download requests
     send_log(bot, message)
-    if not state and message.chat.id not in admin_users:
+        if not state and message.chat.id != admin_user and message.chat.id not in users :
         return
 
     global last_message_id
