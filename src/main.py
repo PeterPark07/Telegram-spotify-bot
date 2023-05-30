@@ -6,7 +6,7 @@ from helper.log import send_log
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('spotify_bot'), threaded=False)
-admin_user = int(os.getenv('admin'))
+admin_users = [int(id) for id in (os.getenv('admin').split(','))]
 state = False
 last_message_id = None
 
@@ -25,7 +25,7 @@ def handle_commands(message):
     if message.text == '/start':
         bot.reply_to(message, 'Welcome to the Spotify Downloader Bot!\n\nSend me a song name or a Spotify link to download.')
     elif message.text == '/help' :
-        bot.reply_to(message, "This bot can download songs from Spotify. Here's how to use it:\n\n1. Send a song name: Just send the name of the song, e.g., 'Luxury'.\n2. Send a Spotify link: Send a link to a specific song, album, or playlist on Spotify.\nPlease note that downloading albums and playlists may take longer.")
+        bot.reply_to(message, "This bot can download songs from Spotify. Here's how to use it:\n\n1. Send a song name: Just send the name of the song, e.g., 'Luxury'.\n2. Send a Spotify link: Send a link to a specific song, album, or playlist on Spotify.\n\nPlease note that downloading albums and playlists may take longer.")
     elif message.text == '/on':
         state = True
         bot.reply_to(message, "BOT ON")
@@ -37,7 +37,7 @@ def handle_commands(message):
 def download_song(message):
     # Handle song download requests
     send_log(bot, message)
-    if not state and message.chat.id != admin_user:
+    if not state and message.chat.id not in admin_users:
         return
 
     global last_message_id
