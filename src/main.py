@@ -41,10 +41,15 @@ def download_song(message):
     if not state and message.chat.id != admin_user and message.chat.id not in users :
         return
 
-    global last_message_id
-    if last_message_id == message.message_id:
-        return
-
+    global last_message_id  
+  
+    # Check if this is the same message as the previous one  
+    if last_message_id == message.message_id:  
+         return  
+  
+    # Store the current message ID as the most recent one  
+    last_message_id = message.message_id 
+ 
     input_text = message.text.strip()
 
     os.makedirs('./spotify', exist_ok=True)
@@ -57,7 +62,6 @@ def download_song(message):
     start_time = time.time()
     wait = bot.reply_to(message, response)
     result = os.system(command)
-    last_message_id = message.message_id
     end_time = time.time()
     download_time = end_time - start_time
     bot.delete_message(message.chat.id, wait.message_id)
