@@ -56,6 +56,7 @@ def download_song(message):
     
     spotify_link = input_text if input_text.startswith('http') and 'spotify.com' in input_text else f"'{input_text}'"
     response = 'Downloading Album ...' if 'album' in input_text else 'Downloading Playlist ...' if 'playlist' in input_text else 'Downloading Track ...'
+    end_response = 'Album Completed' if 'album' in input_text else 'Playlist Completed' if 'playlist' in input_text 
     command = f'spotdl --threads 6 {spotify_link}'
 
     start_time = time.time()
@@ -63,6 +64,8 @@ def download_song(message):
     result = os.system(command)
     end_time = time.time()
     download_time = end_time - start_time
+    if end_response:
+        bot.reply(message, end_response)
     bot.delete_message(message.chat.id, wait.message_id)
 
     if result != 0:
