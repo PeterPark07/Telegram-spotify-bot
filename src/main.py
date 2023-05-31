@@ -55,8 +55,8 @@ def download_song(message):
     os.chdir('./spotify')
     
     spotify_link = input_text if input_text.startswith('http') and 'spotify.com' in input_text else f"'{input_text}'"
-    response = 'Downloading Album ...' if 'album' in input_text else 'Downloading Playlist ...' if 'playlist' in input_text else 'Downloading Track ...'
-    end_response = 'Album Completed' if 'album' in input_text else 'Playlist Completed' if 'playlist' in input_text 
+    response = 'Downloading Album ...✨✨' if 'album' in input_text else 'Downloading Playlist ...✨✨' if 'playlist' in input_text else 'Downloading Track ...✨✨'
+    end_response = 'Album Completed💥💥' if 'album' in input_text else ('Playlist Completed💥💥' if 'playlist' in input_text else None)
     command = f'spotdl --threads 6 {spotify_link}'
 
     start_time = time.time()
@@ -75,7 +75,7 @@ def download_song(message):
     for song_file in song_files:
         bot.send_audio(message.chat.id, audio=open(song_file, 'rb'))
 
-    bot.send_message(message.chat.id, f"Download time: {(int(download_time)) // 60} minutes {(int(download_time)) % 60} seconds")
+    bot.send_message(message.chat.id, f"Download time: {(int(download_time)) // 60} minutes {(int(download_time)) % 60} seconds🌀🌀")
 
     os.chdir('..')
     os.system('rm -rf ./spotify')
