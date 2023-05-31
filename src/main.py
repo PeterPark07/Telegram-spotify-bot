@@ -65,7 +65,7 @@ def download_song(message):
     end_time = time.time()
     download_time = end_time - start_time
     if end_response:
-        bot.reply(message, end_response)
+        bot.reply_to(message, end_response)
     bot.delete_message(message.chat.id, wait.message_id)
 
     if result != 0:
