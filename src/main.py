@@ -64,8 +64,6 @@ def download_song(message):
     result = os.system(command)
     end_time = time.time()
     download_time = end_time - start_time
-    if end_response:
-        bot.reply_to(message, end_response)
     bot.delete_message(message.chat.id, wait.message_id)
 
     if result != 0:
@@ -76,6 +74,8 @@ def download_song(message):
         bot.send_audio(message.chat.id, audio=open(song_file, 'rb'))
 
     bot.send_message(message.chat.id, f"Download time: {(int(download_time)) // 60} minutes {(int(download_time)) % 60} seconds🌀🌀")
+    if end_response:
+        bot.reply_to(message, end_response)
 
     os.chdir('..')
     os.system('rm -rf ./spotify')
