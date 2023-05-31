@@ -9,7 +9,7 @@ bot = telebot.TeleBot(os.getenv('spotify_bot'), threaded=False)
 admin_user = int(os.getenv('admin'))  
 users = [int(id) for id in (os.getenv('users').split(','))]
 state = False
-last_message_id = None
+last_message_id = []
 
 @app.route('/', methods=['POST'])
 def telegram():
@@ -43,11 +43,11 @@ def download_song(message):
     global last_message_id  
   
     # Check if this is the same message as the previous one  
-    if last_message_id == message.message_id:  
+    if message.message_id in last_message_id:  
          return  
   
     # Store the current message ID as the most recent one  
-    last_message_id = message.message_id 
+    last_message_id.append(message.message_id)
  
     input_text = message.text.strip()
 
