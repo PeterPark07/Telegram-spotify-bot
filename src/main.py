@@ -40,9 +40,6 @@ def download_song(message):
     send_log(bot, message)
     if not state and message.chat.id != admin_user and message.chat.id not in users :
         return
-    else:
-        return
-
     global last_message_id  
   
     # Check if this is the same message as the previous one  
