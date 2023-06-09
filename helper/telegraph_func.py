@@ -1,7 +1,7 @@
 from telegraph import Telegraph
 import os
 
-telegraph = Telegraph(os.get_env('telegraph'))
+telegraph = Telegraph(os.getenv('telegraph'))
 path = os.getenv('telegraph_path')
 
 def get_page(path, return_content=True, return_html=True):
