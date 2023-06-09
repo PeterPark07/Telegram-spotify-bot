@@ -2,6 +2,7 @@ import os
 from telegraph import Telegraph
 from datetime import datetime
 
+bot_name = '@AnotherSpotify_bot'
 telegraph = Telegraph(os.getenv('telegraph_token'))
 path = os.getenv('telegraph_path')
 admin_user = int(os.getenv('admin'))
@@ -25,15 +26,15 @@ def log(message):
     if user_id == admin_user:
         log_info = "⭐️ ADMIN ⭐️  "
     elif user_id in users:
-        log_info = f"🔹 User: {name} (USER)  User ID: {user_id}  "
+        log_info = f"🔹 User: {name}   User ID: {user_id}  "
     elif user_id == chat_id:
         log_info = f"🔸 User: {name}   Chat ID: {chat_id}  "
     else:
-        log_info = f"🔸 User: {name}   User ID: {user_id}  Chat ID: {chat_id}  "
+        log_info = f"🔸 User: {name}   User ID: {user_id}, Chat ID: {chat_id}  "
     
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Construct the log message with relevant details
-    log_message = f"🤖 Bot: @AnotherSpotify_bot  {log_info}Message: {message_text}  Time: {current_time}"
+    log_message = f"🤖 Bot: {bot_name} {current_time} {log_info}Message: {message_text}"
     log_message = f"<p>{log_message}</p>"
     logg(log_message)
