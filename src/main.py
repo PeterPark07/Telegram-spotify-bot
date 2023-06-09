@@ -2,7 +2,7 @@ import os
 import time
 from flask import Flask, request
 import telebot
-from helper.log import send_log
+from helper.log import send_log, telegraph_log
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('spotify_bot'), threaded=False)
@@ -21,6 +21,7 @@ def telegram():
 @bot.message_handler(commands=['start', 'on', 'off', 'help'])
 def handle_commands(message):
     # Handle /start, /on, and /off commands
+    telegraph_log(message)
     send_log(bot, message)
     global state
     if message.text == '/start':
