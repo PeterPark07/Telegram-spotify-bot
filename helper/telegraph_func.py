@@ -1,4 +1,5 @@
 from telegraph import Telegraph
+import os
 
 telegraph = Telegraph(os.get_env('telegraph'))
 path = os.getenv('telegraph_path')
