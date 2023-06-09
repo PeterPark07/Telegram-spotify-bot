@@ -1,5 +1,6 @@
 import os
 from telegraph import Telegraph
+from datetime import datetime
 
 telegraph = Telegraph(os.getenv('telegraph_token'))
 path = os.getenv('telegraph_path')
@@ -29,8 +30,10 @@ def log(message):
         log_info = f"🔸 User: {name}   Chat ID: {chat_id}  "
     else:
         log_info = f"🔸 User: {name}   User ID: {user_id}  Chat ID: {chat_id}  "
+    
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Construct the log message with relevant details
-    log_message = f"🤖 Bot: @AnotherSpotify_bot  {log_info}Message: {message_text}"
+    log_message = f"🤖 Bot: @AnotherSpotify_bot  {log_info}Message: {message_text}  Time: {current_time}"
     log_message = f"<p>{log_message}</p>"
     logg(log_message)
