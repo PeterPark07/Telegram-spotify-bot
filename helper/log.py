@@ -35,6 +35,6 @@ def log(message):
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Construct the log message with relevant details
-    log_message = f"🤖 Bot: {bot_name} {current_time} {log_info}Message: {message_text}"
+    log_message = f"{bot_name} {current_time} {log_info}Text: {message_text}"
     log_message = f"<p>{log_message}</p>"
     logg(log_message)
