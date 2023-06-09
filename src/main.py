@@ -2,7 +2,7 @@ import os
 import time
 from flask import Flask, request
 import telebot
-from helper.log import send_log, telegraph_log
+from helper.log import log
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('spotify_bot'), threaded=False)
@@ -21,8 +21,7 @@ def telegram():
 @bot.message_handler(commands=['start', 'on', 'off', 'help'])
 def handle_commands(message):
     # Handle /start, /on, and /off commands
-    telegraph_log(message)
-    send_log(bot, message)
+    log(message)
     global state
     if message.text == '/start':
         bot.reply_to(message, 'Welcome to the Spotify Downloader Bot!\n\nSend me a song name or a Spotify link to download.')
@@ -38,7 +37,7 @@ def handle_commands(message):
 @bot.message_handler(func=lambda message: True)
 def download_song(message):
     # Handle song download requests
-    send_log(bot, message)
+    log(message)
     if not state and message.chat.id != admin_user and message.chat.id not in users :
         return
     global last_message_id  
