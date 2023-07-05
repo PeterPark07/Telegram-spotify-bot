@@ -61,7 +61,9 @@ def download_song(message):
 
     start_time = time.time()
     wait = bot.reply_to(message, response)
+    
     result = os.system(command)
+    
     end_time = time.time()
     download_time = end_time - start_time
     bot.delete_message(message.chat.id, wait.message_id)
